@@ -1,0 +1,6 @@
+{
+  "name": "KJS Technologies",
+  "description": "Official website for KJS Technologies and Coaching Center specializing in Java Full Stack, Python Development, and Data Analytics programs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
