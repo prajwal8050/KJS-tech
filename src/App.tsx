@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Course } from './types';
+import { useMedia } from './context/MediaContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CoursesSection } from './components/CoursesSection';
 import { CourseModal } from './components/CourseModal';
 import { ServicesSection } from './components/ServicesSection';
 import { WhyChooseUs } from './components/WhyChooseUs';
+import { StudentShowcaseSection } from './components/StudentShowcaseSection';
 import { CEOSection } from './components/CEOSection';
 import { PlacementsSection } from './components/PlacementsSection';
 import { FAQSection } from './components/FAQSection';
@@ -13,9 +15,11 @@ import { ContactSection } from './components/ContactSection';
 import { AdmissionModal } from './components/AdmissionForm';
 import { NetlifyDeployGuide } from './components/NetlifyDeployGuide';
 import { Footer } from './components/Footer';
+import { AdminPortal } from './components/AdminPortal';
 import { MessageCircle, Phone, ArrowUpRight } from 'lucide-react';
 
 export default function App() {
+  const { currentView } = useMedia();
   const [selectedCourseForSyllabus, setSelectedCourseForSyllabus] = useState<Course | null>(null);
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
   const [inquiryCourseId, setInquiryCourseId] = useState<string | undefined>(undefined);
@@ -25,6 +29,14 @@ export default function App() {
     setInquiryCourseId(courseId);
     setInquiryModalOpen(true);
   };
+
+  if (currentView === 'admin') {
+    return (
+      <div className="min-h-screen bg-[#0A0C10] text-[#F3F4F6] selection:bg-amber-500 selection:text-black">
+        <AdminPortal />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0A0C10] text-[#F3F4F6] flex flex-col selection:bg-amber-500 selection:text-black">
@@ -44,6 +56,9 @@ export default function App() {
           onSelectCourseForSyllabus={(course) => setSelectedCourseForSyllabus(course)}
           onOpenInquiry={handleOpenInquiry}
         />
+
+        {/* Student Life & Campus Innovation Showcase */}
+        <StudentShowcaseSection onBookVisit={() => handleOpenInquiry()} />
 
         {/* Why Choose KJS / High-Tech Lab & Campus */}
         <WhyChooseUs onBookDemo={() => handleOpenInquiry()} />

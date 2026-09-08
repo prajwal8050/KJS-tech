@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useMedia } from '../context/MediaContext';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, MessageSquare } from 'lucide-react';
 
 export const ContactSection: React.FC = () => {
+  const { ceo } = useMedia();
   const [quickMsg, setQuickMsg] = useState({ name: '', phone: '', note: '' });
   const [sent, setSent] = useState(false);
 
@@ -57,17 +59,22 @@ export const ContactSection: React.FC = () => {
             {/* Founder & CEO Direct Desk Card */}
             <div className="bg-gradient-to-br from-amber-500/10 via-slate-900 to-black border border-amber-500/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0 font-extrabold text-base">
-                  PKS
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border-2 border-amber-500/40 overflow-hidden shrink-0 shadow-lg">
+                  <img
+                    src={ceo.photoUrl}
+                    alt={`${ceo.name}, ${ceo.qualification} - Founder & CEO`}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="text-base font-bold text-white">Prajwal K S</h4>
+                    <h4 className="text-base font-bold text-white">{ceo.name}</h4>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-black">
-                      M.Tech
+                      {ceo.qualification}
                     </span>
                   </div>
-                  <p className="text-xs text-amber-400 font-semibold">Founder & CEO, KJS Technologies</p>
+                  <p className="text-xs text-amber-400 font-semibold">{ceo.role}, {ceo.organization}</p>
                   <p className="text-xs text-slate-400 mt-0.5">Available for student mentorship & enterprise partnerships</p>
                 </div>
               </div>

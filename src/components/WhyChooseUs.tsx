@@ -55,40 +55,49 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onBookDemo }) => {
         {/* 2-Column Showcase */}
         <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Learning Lab Image Showcase */}
+          {/* Left Column: Learning Lab & Student Workstation Showcase */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-slate-900 group">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-slate-900 group">
               <img
-                src={ASSETS.learningLab}
-                alt="KJS Technologies High-Tech Classroom & Coding Lab"
-                className="w-full h-80 sm:h-96 object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-90"
+                src={ASSETS.studentWorkstation}
+                alt="Dedicated student workstation with dual displays and code editor"
+                className="w-full h-80 sm:h-[420px] object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-95"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0C10] via-transparent to-transparent pointer-events-none" />
 
-              <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-[#0A0C10]/90 backdrop-blur-md border border-white/10 text-white">
-                <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-amber-400" />
-                  KJS Technologies Interactive Campus & Lab
+              <div className="absolute top-4 left-4">
+                <span className="px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/15 text-xs font-bold text-amber-400 flex items-center gap-1.5 shadow-lg">
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                  Live Developer Desk Standard
+                </span>
+              </div>
+
+              <div className="absolute bottom-4 left-4 right-4 p-5 rounded-2xl bg-[#0A0C10]/95 backdrop-blur-md border border-white/10 text-white">
+                <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
+                  <span>Bangalore Tech Center</span>
                 </div>
-                <div className="text-sm font-bold text-white mt-1">
-                  Individual Workstations • Unlimited Wi-Fi • Dedicated Mentor Desk
+                <div className="text-base font-bold text-white mt-1">
+                  Individual High-Performance Workstations • Gigabit Ethernet • Dedicated Mentor Desk
                 </div>
+                <p className="text-xs text-slate-300 mt-1">
+                  Equipped with dual monitors for seamless live coding, debugging, and cloud deployment sprints.
+                </p>
               </div>
             </div>
 
             {/* Quick Metrics */}
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="bg-gradient-to-br from-slate-900 to-black p-3.5 rounded-2xl border border-white/10">
-                <div className="text-xl font-black text-amber-400 font-['Space_Grotesk',sans-serif]">98%</div>
+              <div className="bg-gradient-to-br from-[#101524] to-black p-4 rounded-2xl border border-white/10">
+                <div className="text-2xl font-black text-amber-400 font-['Space_Grotesk',sans-serif]">98.4%</div>
                 <div className="text-[11px] text-slate-400 font-medium">Placement Rate</div>
               </div>
-              <div className="bg-gradient-to-br from-slate-900 to-black p-3.5 rounded-2xl border border-white/10">
-                <div className="text-xl font-black text-amber-400 font-['Space_Grotesk',sans-serif]">200+</div>
+              <div className="bg-gradient-to-br from-[#101524] to-black p-4 rounded-2xl border border-white/10">
+                <div className="text-2xl font-black text-amber-400 font-['Space_Grotesk',sans-serif]">200+</div>
                 <div className="text-[11px] text-slate-400 font-medium">Hiring Drives</div>
               </div>
-              <div className="bg-gradient-to-br from-slate-900 to-black p-3.5 rounded-2xl border border-white/10">
-                <div className="text-xl font-black text-amber-400 font-['Space_Grotesk',sans-serif]">15+ LPA</div>
+              <div className="bg-gradient-to-br from-[#101524] to-black p-4 rounded-2xl border border-white/10">
+                <div className="text-2xl font-black text-amber-400 font-['Space_Grotesk',sans-serif]">₹18.5 LPA</div>
                 <div className="text-[11px] text-slate-400 font-medium">Highest Package</div>
               </div>
             </div>

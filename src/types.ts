@@ -57,3 +57,23 @@ export interface InquiryFormData {
   experienceLevel: 'student' | 'fresher' | 'working_pro' | 'career_switch';
   message: string;
 }
+
+export interface HeroSlide {
+  id: string;
+  image: string;
+  title: string;
+  subtitle: string;
+  tag: string;
+  stat: string;
+  location: string;
+}
+
+export interface CEOMetadata {
+  name: string;
+  qualification: string;
+  role: string;
+  organization: string;
+  photoUrl: string;
+  email: string;
+  phone: string;
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ASSETS } from '../assets/imagesMap';
-import { Menu, X, Phone, Mail, Sparkles, BookOpen, Laptop, Award, HelpCircle, ArrowRight, ExternalLink } from 'lucide-react';
+import { useMedia } from '../context/MediaContext';
+import { Menu, X, Phone, Mail, Sparkles, BookOpen, Laptop, Award, HelpCircle, ArrowRight, ExternalLink, Lock, ShieldCheck } from 'lucide-react';
 
 interface NavbarProps {
   onOpenInquiry: (courseId?: string) => void;
@@ -8,6 +9,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuide }) => {
+  const { navigateTo, isAdmin } = useMedia();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -21,10 +23,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuid
 
   const navLinks = [
     { label: 'Courses', href: '#courses', icon: BookOpen },
-    { label: 'Services', href: '#services', icon: Laptop },
-    { label: 'Leadership', href: '#leadership', icon: Award },
-    { label: 'Why KJS', href: '#why-us', icon: Sparkles },
+    { label: 'Campus Life', href: '#student-life', icon: Sparkles },
     { label: 'Placements', href: '#placements', icon: Award },
+    { label: 'Leadership', href: '#leadership', icon: Award },
+    { label: 'Services', href: '#services', icon: Laptop },
+    { label: 'Why KJS', href: '#why-us', icon: Sparkles },
     { label: 'FAQ', href: '#faq', icon: HelpCircle },
     { label: 'Contact', href: '#contact', icon: Phone },
   ];
@@ -40,19 +43,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuid
             </span>
             <span className="text-slate-300">Upcoming Batches Starting Monday: Java Full Stack • Python • Data Analyst</span>
           </div>
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-3 text-xs">
             <a href="tel:+918050070508" className="flex items-center gap-1.5 text-slate-300 hover:text-amber-400 transition-colors font-medium">
               <Phone className="w-3.5 h-3.5 text-amber-500" />
               <span>Helpline: +91 80500 70508</span>
             </a>
             <span className="text-white/20 hidden sm:inline">|</span>
             <button
+              onClick={() => navigateTo('admin')}
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 transition-colors font-bold cursor-pointer"
+              title="CEO & Admin Portal (/admin)"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Admin Login</span>
+            </button>
+            <span className="text-white/20 hidden sm:inline">|</span>
+            <button
               onClick={onOpenNetlifyGuide}
-              className="hidden sm:inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors font-medium cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors font-medium cursor-pointer"
               title="Netlify Deployment Guide"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span>Netlify Ready Guide</span>
+              <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
+              <span>Netlify Guide</span>
             </button>
           </div>
         </div>
@@ -168,9 +180,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuid
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
+                  navigateTo('admin');
+                }}
+                className="w-full py-2 rounded-full text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 text-center flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>Admin Login & Uploads (/admin)</span>
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
                   onOpenNetlifyGuide();
                 }}
-                className="w-full py-2 rounded-full text-xs font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/20 text-center flex items-center justify-center gap-1.5"
+                className="w-full py-2 rounded-full text-xs font-semibold text-slate-300 bg-white/5 border border-white/10 text-center flex items-center justify-center gap-1.5"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>Netlify Deployment Steps</span>

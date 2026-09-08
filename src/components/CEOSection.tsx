@@ -1,7 +1,10 @@
 import React from 'react';
-import { Phone, Mail, MessageCircle, Award, CheckCircle2, Sparkles, GraduationCap, ShieldCheck, Briefcase } from 'lucide-react';
+import { useMedia } from '../context/MediaContext';
+import { Phone, Mail, MessageCircle, Award, CheckCircle2, Sparkles, GraduationCap, ShieldCheck, Briefcase, Camera } from 'lucide-react';
 
 export const CEOSection: React.FC = () => {
+  const { ceo, navigateTo } = useMedia();
+
   return (
     <section id="leadership" className="py-16 sm:py-20 bg-[#07080A] text-[#F3F4F6] border-b border-white/10 relative overflow-hidden">
       {/* Background glow */}
@@ -23,42 +26,51 @@ export const CEOSection: React.FC = () => {
         </div>
 
         {/* CEO Feature Card */}
-        <div className="max-w-5xl mx-auto bg-gradient-to-br from-slate-900 via-[#0D1117] to-black rounded-3xl border border-white/10 p-6 sm:p-10 shadow-2xl relative">
+        <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#101422] via-[#0D1117] to-black rounded-3xl border border-white/10 p-6 sm:p-10 shadow-2xl relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Column: CEO Profile Photo / Emblem */}
-            <div className="lg:col-span-4 flex flex-col items-center text-center">
-              <div className="relative">
+            {/* Left Column: CEO Profile Photo */}
+            <div className="lg:col-span-5 flex flex-col items-center text-center">
+              <div className="relative group">
                 {/* Executive Avatar Frame */}
-                <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl bg-gradient-to-br from-amber-500/20 via-slate-800 to-black border-2 border-amber-500/40 p-1.5 shadow-2xl flex items-center justify-center relative group">
-                  <div className="w-full h-full rounded-2xl bg-[#0A0C10] flex flex-col items-center justify-center text-amber-400">
-                    <span className="text-4xl sm:text-5xl font-extrabold font-['Space_Grotesk',sans-serif] tracking-tight text-white">
-                      P<span className="text-amber-500">KS</span>
-                    </span>
-                    <span className="text-[10px] tracking-widest text-amber-400 font-bold uppercase mt-1">
-                      KJS Founder
-                    </span>
-                  </div>
+                <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-3xl bg-gradient-to-br from-amber-500/30 via-slate-800 to-black border-2 border-amber-500/50 p-1.5 shadow-2xl overflow-hidden relative">
+                  <img
+                    src={ceo.photoUrl}
+                    alt={`${ceo.name}, ${ceo.qualification} - Founder & CEO of KJS Technologies`}
+                    className="w-full h-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none rounded-2xl" />
+                  
+                  {/* Quick Change Overlay button */}
+                  <button
+                    onClick={() => navigateTo('admin')}
+                    className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-400 text-xs font-bold gap-1 cursor-pointer"
+                    title="Change CEO Photo in Admin"
+                  >
+                    <Camera className="w-5 h-5" />
+                    <span>Change Photo</span>
+                  </button>
                 </div>
 
                 {/* Verified Leadership Pill */}
-                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full bg-amber-500 text-black text-[11px] font-bold shadow-lg flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-black" />
-                  <span>Chief Executive Officer</span>
+                <div className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-black text-xs font-black shadow-xl flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-black" />
+                  <span>{ceo.role}</span>
                 </div>
               </div>
 
               {/* Name & Academic Credentials */}
-              <div className="mt-6 space-y-1">
-                <h3 className="text-2xl font-black text-white font-['Space_Grotesk',sans-serif]">
-                  Prajwal K S
+              <div className="mt-7 space-y-1.5">
+                <h3 className="text-2xl sm:text-3xl font-black text-white font-['Space_Grotesk',sans-serif]">
+                  {ceo.name}
                 </h3>
-                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/5 border border-white/10 text-amber-400 text-xs font-semibold">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-amber-400 text-xs font-bold">
                   <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Qualification: M.Tech</span>
+                  <span>Qualification: {ceo.qualification}</span>
                 </div>
-                <p className="text-xs text-slate-400 pt-1">
-                  Founder & CEO, KJS Technologies
+                <p className="text-xs text-slate-400 pt-0.5">
+                  {ceo.role}, {ceo.organization}
                 </p>
               </div>
 
@@ -77,7 +89,7 @@ export const CEOSection: React.FC = () => {
             </div>
 
             {/* Right Column: Mission, Direct Contact & Values */}
-            <div className="lg:col-span-8 space-y-6">
+            <div className="lg:col-span-7 space-y-6">
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-widest">
                   <Award className="w-4 h-4 text-amber-500" />

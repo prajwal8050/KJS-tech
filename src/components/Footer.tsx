@@ -1,6 +1,7 @@
 import React from 'react';
 import { ASSETS } from '../assets/imagesMap';
-import { Phone, Mail, MapPin, Heart, ExternalLink, ArrowUp } from 'lucide-react';
+import { useMedia } from '../context/MediaContext';
+import { Phone, Mail, MapPin, Heart, ExternalLink, ArrowUp, Lock } from 'lucide-react';
 
 interface FooterProps {
   onOpenInquiry: (courseId?: string) => void;
@@ -8,6 +9,8 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuide }) => {
+  const { ceo, navigateTo } = useMedia();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -144,8 +147,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuid
             <div className="space-y-2 text-slate-400">
               <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 space-y-1 mb-2">
                 <span className="text-[10px] text-amber-400 font-bold block uppercase tracking-wider">Leadership Desk</span>
-                <span className="text-white font-bold block text-xs">Prajwal K S, <span className="text-amber-400 font-normal">M.Tech</span></span>
-                <span className="text-[11px] text-slate-400 block">Founder & CEO</span>
+                <span className="text-white font-bold block text-xs">{ceo.name}, <span className="text-amber-400 font-normal">{ceo.qualification}</span></span>
+                <span className="text-[11px] text-slate-400 block">{ceo.role}, {ceo.organization}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -163,6 +166,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuid
                 <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
                 <span>Tech Corridor, Outer Ring Road, Bangalore - 560103</span>
               </div>
+              <div className="pt-2">
+                <button
+                  onClick={() => navigateTo('admin')}
+                  className="inline-flex items-center gap-1.5 text-amber-400/80 hover:text-amber-400 text-xs font-semibold hover:underline cursor-pointer"
+                >
+                  <Lock className="w-3 h-3" />
+                  <span>Admin Portal Login (/admin)</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -175,6 +187,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuid
           </div>
 
           <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigateTo('admin')}
+              className="text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Admin / Uploads</span>
+            </button>
+            <span>•</span>
             <span>ISO 9001:2015 Certified Coaching Center</span>
             <span>•</span>
             <button
