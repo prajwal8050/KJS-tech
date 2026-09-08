@@ -136,22 +136,27 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuid
             </ul>
           </div>
 
-          {/* Col 4: Quick Contacts */}
+          {/* Col 4: Quick Contacts & Leadership */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-white uppercase tracking-widest">
               Direct Contact
             </h4>
             <div className="space-y-2 text-slate-400">
+              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 space-y-1 mb-2">
+                <span className="text-[10px] text-amber-400 font-bold block uppercase tracking-wider">Leadership Desk</span>
+                <span className="text-white font-bold block text-xs">Prajwal K S, <span className="text-amber-400 font-normal">M.Tech</span></span>
+                <span className="text-[11px] text-slate-400 block">Founder & CEO</span>
+              </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-white transition-colors">
-                  +91 98765 43210
+                <a href="tel:+918050070508" className="hover:text-amber-400 text-slate-200 transition-colors font-medium">
+                  +91 80500 70508
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <a href="mailto:info@kjstechnologies.com" className="hover:text-white transition-colors">
-                  info@kjstechnologies.com
+                <a href="mailto:prajwalgowd88@gmail.com" className="hover:text-amber-400 text-slate-200 transition-colors break-all">
+                  prajwalgowd88@gmail.com
                 </a>
               </div>
               <div className="flex items-start gap-2">

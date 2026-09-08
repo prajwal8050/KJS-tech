@@ -54,18 +54,46 @@ export const ContactSection: React.FC = () => {
               </div>
             </div>
 
+            {/* Founder & CEO Direct Desk Card */}
+            <div className="bg-gradient-to-br from-amber-500/10 via-slate-900 to-black border border-amber-500/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0 font-extrabold text-base">
+                  PKS
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-base font-bold text-white">Prajwal K S</h4>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-black">
+                      M.Tech
+                    </span>
+                  </div>
+                  <p className="text-xs text-amber-400 font-semibold">Founder & CEO, KJS Technologies</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Available for student mentorship & enterprise partnerships</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <a
+                  href="tel:+918050070508"
+                  className="px-4 py-2 rounded-full text-xs font-bold text-black bg-amber-500 hover:bg-amber-400 transition-colors flex items-center gap-1.5"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>Call CEO Desk</span>
+                </a>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-gradient-to-br from-slate-900 to-black border border-white/10 rounded-2xl p-5 flex items-start gap-3 shadow-xl">
                 <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">Admissions Helpline</h5>
-                  <a href="tel:+919876543210" className="text-sm font-bold text-white hover:text-amber-400 transition-colors block mt-0.5">
-                    +91 98765 43210
+                  <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">Direct Helpline & WhatsApp</h5>
+                  <a href="tel:+918050070508" className="text-sm font-bold text-white hover:text-amber-400 transition-colors block mt-0.5">
+                    +91 80500 70508
                   </a>
-                  <a href="tel:+918765432109" className="text-xs text-slate-400 hover:text-amber-400 transition-colors block">
-                    +91 87654 32109
+                  <a href="https://wa.me/918050070508" target="_blank" rel="noreferrer" className="text-xs text-emerald-400 hover:underline block mt-0.5 font-medium">
+                    WhatsApp: +91 8050070508
                   </a>
                 </div>
               </div>
@@ -75,12 +103,12 @@ export const ContactSection: React.FC = () => {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">Official Inquiries</h5>
-                  <a href="mailto:info@kjstechnologies.com" className="text-sm font-bold text-white hover:text-amber-400 transition-colors block mt-0.5">
-                    info@kjstechnologies.com
+                  <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">Direct & Official Email</h5>
+                  <a href="mailto:prajwalgowd88@gmail.com" className="text-xs sm:text-sm font-bold text-white hover:text-amber-400 transition-colors block mt-0.5 truncate">
+                    prajwalgowd88@gmail.com
                   </a>
-                  <a href="mailto:careers@kjstechnologies.com" className="text-xs text-slate-400 hover:text-amber-400 transition-colors block">
-                    careers@kjstechnologies.com
+                  <a href="mailto:info@kjstechnologies.com" className="text-xs text-slate-400 hover:text-amber-400 transition-colors block">
+                    info@kjstechnologies.com
                   </a>
                 </div>
               </div>
@@ -144,7 +172,7 @@ export const ContactSection: React.FC = () => {
                   <input
                     type="tel"
                     required
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 80500 70508"
                     value={quickMsg.phone}
                     onChange={(e) => setQuickMsg({ ...quickMsg, phone: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/10 text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-500"

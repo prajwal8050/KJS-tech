@@ -6,6 +6,7 @@ import { CoursesSection } from './components/CoursesSection';
 import { CourseModal } from './components/CourseModal';
 import { ServicesSection } from './components/ServicesSection';
 import { WhyChooseUs } from './components/WhyChooseUs';
+import { CEOSection } from './components/CEOSection';
 import { PlacementsSection } from './components/PlacementsSection';
 import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
@@ -46,6 +47,9 @@ export default function App() {
 
         {/* Why Choose KJS / High-Tech Lab & Campus */}
         <WhyChooseUs onBookDemo={() => handleOpenInquiry()} />
+
+        {/* Leadership & CEO Desk (Prajwal K S, M.Tech) */}
+        <CEOSection />
 
         {/* Enterprise Software & Tech Solutions */}
         <ServicesSection onContactServices={() => handleOpenInquiry('enterprise-software')} />
@@ -89,14 +93,21 @@ export default function App() {
         onClose={() => setNetlifyGuideOpen(false)}
       />
 
-      {/* Floating Action Buttons (WhatsApp & Quick Call) */}
+      {/* Floating Action Buttons (WhatsApp & Quick Call to CEO / Admissions Desk) */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
         <a
-          href="https://wa.me/919876543210?text=Hi%20KJS%20Technologies,%20I%20am%20interested%20in%20your%20coaching%20programs"
+          href="tel:+918050070508"
+          className="w-13 h-13 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
+          title="Call Helpline: +91 8050070508"
+        >
+          <Phone className="w-5 h-5 fill-black" />
+        </a>
+        <a
+          href="https://wa.me/918050070508?text=Hi%20Prajwal%20sir%20/%20KJS%20Technologies,%20I%20am%20interested%20in%20your%20coaching%20programs"
           target="_blank"
           rel="noreferrer"
           className="w-13 h-13 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
-          title="Chat with Counselor on WhatsApp"
+          title="Chat on WhatsApp (+91 8050070508)"
         >
           <MessageCircle className="w-6 h-6 fill-white" />
         </a>

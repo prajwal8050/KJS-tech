@@ -74,7 +74,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onAskQuestion }) => {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://wa.me/919876543210?text=Hello%20KJS%20Technologies,%20I%20want%20to%20know%20about%20your%20courses"
+              href="https://wa.me/918050070508?text=Hello%20KJS%20Technologies,%20I%20want%20to%20know%20about%20your%20courses"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-xs"
@@ -82,13 +82,13 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onAskQuestion }) => {
               <MessageCircle className="w-4 h-4" />
               <span>WhatsApp Chat</span>
             </a>
-            <button
-              onClick={onAskQuestion}
+            <a
+              href="tel:+918050070508"
               className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold text-black bg-amber-500 hover:bg-amber-400 shadow-lg shadow-amber-500/20 transition-colors cursor-pointer"
             >
               <PhoneCall className="w-4 h-4 text-black" />
-              <span>Call Us</span>
-            </button>
+              <span>Call Helpline</span>
+            </a>
           </div>
         </div>
 

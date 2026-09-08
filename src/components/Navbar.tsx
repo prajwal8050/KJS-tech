@@ -22,6 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuid
   const navLinks = [
     { label: 'Courses', href: '#courses', icon: BookOpen },
     { label: 'Services', href: '#services', icon: Laptop },
+    { label: 'Leadership', href: '#leadership', icon: Award },
     { label: 'Why KJS', href: '#why-us', icon: Sparkles },
     { label: 'Placements', href: '#placements', icon: Award },
     { label: 'FAQ', href: '#faq', icon: HelpCircle },
@@ -40,9 +41,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuid
             <span className="text-slate-300">Upcoming Batches Starting Monday: Java Full Stack • Python • Data Analyst</span>
           </div>
           <div className="flex items-center gap-4 text-xs">
-            <a href="tel:+919876543210" className="flex items-center gap-1.5 text-slate-300 hover:text-amber-400 transition-colors">
+            <a href="tel:+918050070508" className="flex items-center gap-1.5 text-slate-300 hover:text-amber-400 transition-colors font-medium">
               <Phone className="w-3.5 h-3.5 text-amber-500" />
-              <span>+91 98765 43210</span>
+              <span>Helpline: +91 80500 70508</span>
             </a>
             <span className="text-white/20 hidden sm:inline">|</span>
             <button
