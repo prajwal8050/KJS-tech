@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ASSETS } from '../assets/imagesMap';
-import { useMedia } from '../context/MediaContext';
-import { Menu, X, Phone, Mail, Sparkles, BookOpen, Laptop, Award, HelpCircle, ArrowRight, ExternalLink, Lock, ShieldCheck } from 'lucide-react';
+import { Menu, X, Phone, Mail, Sparkles, BookOpen, Laptop, Award, HelpCircle, ArrowRight, ExternalLink } from 'lucide-react';
 
 interface NavbarProps {
   onOpenInquiry: (courseId?: string) => void;
@@ -9,7 +8,6 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuide }) => {
-  const { navigateTo, isAdmin } = useMedia();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -48,15 +46,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuid
               <Phone className="w-3.5 h-3.5 text-amber-500" />
               <span>Helpline: +91 80500 70508</span>
             </a>
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <button
-              onClick={() => navigateTo('admin')}
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 transition-colors font-bold cursor-pointer"
-              title="CEO & Admin Portal (/admin)"
-            >
-              <Lock className="w-3 h-3" />
-              <span>Admin Login</span>
-            </button>
             <span className="text-white/20 hidden sm:inline">|</span>
             <button
               onClick={onOpenNetlifyGuide}
@@ -176,16 +165,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry, onOpenNetlifyGuid
                 className="w-full py-2.5 rounded-full text-sm font-bold text-black bg-amber-500 hover:bg-amber-400 text-center"
               >
                 Book Free Demo Session
-              </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  navigateTo('admin');
-                }}
-                className="w-full py-2 rounded-full text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 text-center flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>Admin Login & Uploads (/admin)</span>
               </button>
               <button
                 onClick={() => {

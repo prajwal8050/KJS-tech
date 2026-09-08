@@ -1,7 +1,7 @@
 import React from 'react';
 import { ASSETS } from '../assets/imagesMap';
 import { useMedia } from '../context/MediaContext';
-import { Phone, Mail, MapPin, Heart, ExternalLink, ArrowUp, Lock } from 'lucide-react';
+import { Phone, Mail, MapPin, Heart, ExternalLink, ArrowUp } from 'lucide-react';
 
 interface FooterProps {
   onOpenInquiry: (courseId?: string) => void;
@@ -9,7 +9,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuide }) => {
-  const { ceo, navigateTo } = useMedia();
+  const { ceo } = useMedia();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -166,15 +166,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuid
                 <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
                 <span>Tech Corridor, Outer Ring Road, Bangalore - 560103</span>
               </div>
-              <div className="pt-2">
-                <button
-                  onClick={() => navigateTo('admin')}
-                  className="inline-flex items-center gap-1.5 text-amber-400/80 hover:text-amber-400 text-xs font-semibold hover:underline cursor-pointer"
-                >
-                  <Lock className="w-3 h-3" />
-                  <span>Admin Portal Login (/admin)</span>
-                </button>
-              </div>
             </div>
           </div>
 
@@ -187,14 +178,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry, onOpenNetlifyGuid
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigateTo('admin')}
-              className="text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1 cursor-pointer"
-            >
-              <Lock className="w-3 h-3" />
-              <span>Admin / Uploads</span>
-            </button>
-            <span>•</span>
             <span>ISO 9001:2015 Certified Coaching Center</span>
             <span>•</span>
             <button

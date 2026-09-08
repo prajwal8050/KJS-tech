@@ -1,9 +1,9 @@
 import React from 'react';
 import { useMedia } from '../context/MediaContext';
-import { Phone, Mail, MessageCircle, Award, CheckCircle2, Sparkles, GraduationCap, ShieldCheck, Briefcase, Camera } from 'lucide-react';
+import { Phone, Mail, MessageCircle, Award, CheckCircle2, Sparkles, GraduationCap, ShieldCheck, Briefcase } from 'lucide-react';
 
 export const CEOSection: React.FC = () => {
-  const { ceo, navigateTo } = useMedia();
+  const { ceo } = useMedia();
 
   return (
     <section id="leadership" className="py-16 sm:py-20 bg-[#07080A] text-[#F3F4F6] border-b border-white/10 relative overflow-hidden">
@@ -41,16 +41,6 @@ export const CEOSection: React.FC = () => {
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none rounded-2xl" />
-                  
-                  {/* Quick Change Overlay button */}
-                  <button
-                    onClick={() => navigateTo('admin')}
-                    className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-400 text-xs font-bold gap-1 cursor-pointer"
-                    title="Change CEO Photo in Admin"
-                  >
-                    <Camera className="w-5 h-5" />
-                    <span>Change Photo</span>
-                  </button>
                 </div>
 
                 {/* Verified Leadership Pill */}

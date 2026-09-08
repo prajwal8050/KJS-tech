@@ -45,17 +45,17 @@ export const AdminPortal: React.FC = () => {
     navigateTo,
   } = useMedia();
 
-  // Login form states
-  const [usernameInput, setUsernameInput] = useState('admin@kjstechnologies.com');
-  const [passwordInput, setPasswordInput] = useState('Admin@KJS2025');
+  // Login form states (hidden/empty for security)
+  const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   // Active Admin Tab
   const [activeTab, setActiveTab] = useState<'ceo' | 'hero' | 'backup'>('ceo');
 
-  // CEO Upload states
-  const [ceoPreviewUrl, setCeoPreviewUrl] = useState<string | null>(null);
+  // CEO Upload & Staging states
+  const [stagedCeoPhoto, setStagedCeoPhoto] = useState<string | null>(null);
   const [ceoUploadLoading, setCeoUploadLoading] = useState(false);
   const [ceoSuccessMsg, setCeoSuccessMsg] = useState('');
   const ceoFileInputRef = useRef<HTMLInputElement | null>(null);
@@ -84,17 +84,11 @@ export const AdminPortal: React.FC = () => {
     setLoginError('');
     const success = loginAdmin(passwordInput);
     if (!success) {
-      setLoginError('Invalid password. Use the demo password shown below.');
+      setLoginError('Invalid credentials. Please verify and try again.');
     }
   };
 
-  const handleQuickDemoLogin = () => {
-    setUsernameInput('admin@kjstechnologies.com');
-    setPasswordInput('Admin@KJS2025');
-    loginAdmin('Admin@KJS2025');
-  };
-
-  // Handle CEO Image File Selection
+  // Handle CEO Image File Selection - Stages photo and prompts to click Save
   const handleCEOFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -103,10 +97,8 @@ export const AdminPortal: React.FC = () => {
       setCeoUploadLoading(true);
       setCeoSuccessMsg('');
       const compressed = await compressAndFormatImage(file, 1600, 0.88);
-      setCeoPreviewUrl(compressed);
-      updateCEOPhoto(compressed);
-      setCeoSuccessMsg('CEO photo updated and saved successfully in browser storage!');
-      setTimeout(() => setCeoSuccessMsg(''), 4000);
+      setStagedCeoPhoto(compressed);
+      setCeoSuccessMsg('New photo selected! Click "Save & Apply Photo Everywhere" below to apply.');
     } catch (err) {
       console.error('Failed to compress CEO image:', err);
       alert('Could not process image file. Please choose another JPEG/PNG.');
@@ -116,7 +108,7 @@ export const AdminPortal: React.FC = () => {
     }
   };
 
-  // Handle CEO Image Drag & Drop
+  // Handle CEO Image Drag & Drop - Stages photo and prompts to click Save
   const handleCEODrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files?.[0];
@@ -126,15 +118,29 @@ export const AdminPortal: React.FC = () => {
       setCeoUploadLoading(true);
       setCeoSuccessMsg('');
       const compressed = await compressAndFormatImage(file, 1600, 0.88);
-      setCeoPreviewUrl(compressed);
-      updateCEOPhoto(compressed);
-      setCeoSuccessMsg('CEO photo updated and saved successfully in browser storage!');
-      setTimeout(() => setCeoSuccessMsg(''), 4000);
+      setStagedCeoPhoto(compressed);
+      setCeoSuccessMsg('New photo dropped! Click "Save & Apply Photo Everywhere" below to apply.');
     } catch (err) {
       console.error('Failed to upload dropped image:', err);
     } finally {
       setCeoUploadLoading(false);
     }
+  };
+
+  // Commit and Save Staged CEO Photo Everywhere
+  const handleSaveStagedCEOPhoto = () => {
+    if (!stagedCeoPhoto) return;
+    updateCEOPhoto(stagedCeoPhoto);
+    setStagedCeoPhoto(null);
+    setCeoSuccessMsg('CEO photo saved successfully and applied everywhere across the website (Leadership Card, CEO Desk, Contact Section, and Footer)!');
+    setTimeout(() => setCeoSuccessMsg(''), 6000);
+  };
+
+  // Re-save/Confirm Current CEO Photo
+  const handleSaveCurrentCEO = () => {
+    updateCEOPhoto(ceo.photoUrl);
+    setCeoSuccessMsg('Current CEO photo saved and verified everywhere across the website!');
+    setTimeout(() => setCeoSuccessMsg(''), 5000);
   };
 
   // Handle Hero Slide Image File Selection
@@ -224,6 +230,26 @@ export const AdminPortal: React.FC = () => {
     reorderHeroSlides(copy);
   };
 
+  // Save all Hero slides to storage and notify
+  const handleSaveAllHeroSlides = () => {
+    reorderHeroSlides([...heroSlides]);
+    setHeroSuccessMsg('Hero slider order and photos saved and applied everywhere on the website!');
+    setTimeout(() => setHeroSuccessMsg(''), 5000);
+  };
+
+  // Master Save & Apply Everywhere
+  const handleSaveAllEverywhere = () => {
+    if (stagedCeoPhoto) {
+      updateCEOPhoto(stagedCeoPhoto);
+      setStagedCeoPhoto(null);
+    } else {
+      updateCEOPhoto(ceo.photoUrl);
+    }
+    reorderHeroSlides([...heroSlides]);
+    setHeroSuccessMsg('All photos, slides, and settings saved and live across the entire website!');
+    setTimeout(() => setHeroSuccessMsg(''), 6000);
+  };
+
   // ==========================================
   // VIEW 1: LOGIN FORM (If not logged in)
   // ==========================================
@@ -244,7 +270,7 @@ export const AdminPortal: React.FC = () => {
               <span>Back to Public Website</span>
             </button>
             <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] text-amber-400 font-mono">
-              URL: /admin
+              /admin
             </span>
           </div>
 
@@ -253,51 +279,27 @@ export const AdminPortal: React.FC = () => {
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600" />
 
             {/* Header */}
-            <div className="text-center space-y-2 mb-6">
+            <div className="text-center space-y-2 mb-8">
               <div className="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
                 <Lock className="w-7 h-7" />
               </div>
               <h1 className="text-2xl font-black tracking-tight text-white font-['Space_Grotesk',sans-serif]">
-                KJS Admin & CEO Portal
+                Admin Sign In
               </h1>
               <p className="text-xs text-slate-400">
-                Sign in to manage the CEO photo, coaching centre tour slides, and media assets.
+                Sign in to manage the CEO photo, coaching centre tour slides, and website media.
               </p>
-            </div>
-
-            {/* Demo Credentials Alert Box */}
-            <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2.5">
-              <div className="flex items-center justify-between text-xs font-bold text-amber-400">
-                <span className="flex items-center gap-1.5">
-                  <Key className="w-4 h-4 text-amber-500" />
-                  Demo Admin Credentials
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500 text-black font-extrabold uppercase">
-                  Ready
-                </span>
-              </div>
-              <div className="text-xs text-slate-300 font-mono space-y-1 bg-black/40 p-2.5 rounded-xl border border-white/5">
-                <div><span className="text-slate-500">Username:</span> admin@kjstechnologies.com</div>
-                <div><span className="text-slate-500">Password:</span> <strong className="text-amber-400">Admin@KJS2025</strong></div>
-              </div>
-              <button
-                type="button"
-                onClick={handleQuickDemoLogin}
-                className="w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>1-Click Quick Demo Login</span>
-              </button>
             </div>
 
             {/* Form */}
             <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Email or Username
+                  Email / Username
                 </label>
                 <input
                   type="text"
+                  placeholder="admin@kjstechnologies.com"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500 transition-colors"
@@ -312,6 +314,7 @@ export const AdminPortal: React.FC = () => {
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter admin password"
                     value={passwordInput}
                     onChange={(e) => setPasswordInput(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500 transition-colors pr-10"
@@ -381,17 +384,25 @@ export const AdminPortal: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={handleSaveAllEverywhere}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black text-xs font-black shadow-lg shadow-amber-500/20 transition-all cursor-pointer hover:scale-105"
+              title="Save all changes and apply immediately to the public website"
+            >
+              <CheckCircle2 className="w-4 h-4 fill-black text-amber-400" />
+              <span>Save & Apply Everywhere</span>
+            </button>
             <button
               onClick={() => navigateTo('website')}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-xs font-semibold transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-xs font-semibold transition-all cursor-pointer"
             >
               <Eye className="w-3.5 h-3.5 text-amber-400" />
               <span>View Public Website</span>
             </button>
             <button
               onClick={logoutAdmin}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-400 text-xs font-semibold transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-400 text-xs font-semibold transition-all cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>
@@ -508,10 +519,75 @@ export const AdminPortal: React.FC = () => {
 
                   {ceoUploadLoading && (
                     <div className="absolute inset-0 bg-black/80 flex items-center justify-center text-amber-400 text-sm font-bold">
-                      Compressing and saving photo...
+                      Compressing and loading photo...
                     </div>
                   )}
                 </div>
+
+                {/* Staged Photo Save Action Box (Appears immediately after photo is selected/dropped) */}
+                {stagedCeoPhoto && (
+                  <div className="p-5 rounded-3xl bg-gradient-to-br from-amber-500/15 via-[#131926] to-[#0C0F17] border-2 border-amber-500 space-y-4 shadow-2xl">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
+                        <span className="text-sm font-black text-white">
+                          New Photo Selected — Pending Save
+                        </span>
+                      </div>
+                      <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-black uppercase">
+                        Action Needed
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4 bg-black/50 p-3 rounded-2xl border border-amber-500/30">
+                      <div className="w-20 h-20 rounded-xl overflow-hidden border-2 border-amber-400 shrink-0 shadow-md">
+                        <img
+                          src={stagedCeoPhoto}
+                          alt="Staged CEO Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="space-y-1 text-xs">
+                        <p className="text-white font-bold">
+                          Portrait processed and ready to publish.
+                        </p>
+                        <p className="text-slate-300 text-[11px] leading-relaxed">
+                          Clicking <strong className="text-amber-400">Save & Apply Photo Everywhere</strong> will apply this photo to the Leadership Section, CEO Desk, Bangalore Campus Card, and Footer.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-center gap-3 pt-1">
+                      <button
+                        type="button"
+                        onClick={handleSaveStagedCEOPhoto}
+                        className="w-full sm:flex-1 py-3.5 px-5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black font-black text-sm shadow-xl shadow-amber-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02]"
+                      >
+                        <CheckCircle2 className="w-5 h-5 fill-black text-amber-400" />
+                        <span>Save & Apply Photo Everywhere</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setStagedCeoPhoto(null)}
+                        className="w-full sm:w-auto py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-semibold cursor-pointer transition-colors"
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* If no photo is currently staged, provide explicit button to re-save/affirm current photo */}
+                {!stagedCeoPhoto && (
+                  <button
+                    type="button"
+                    onClick={handleSaveCurrentCEO}
+                    className="w-full py-3 px-4 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:text-amber-300 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Save & Apply Current Photo Everywhere</span>
+                  </button>
+                )}
 
                 {/* Direct Action Controls */}
                 <div className="p-5 rounded-2xl bg-[#0C0F17] border border-white/10 flex flex-wrap items-center justify-between gap-4">
@@ -777,14 +853,14 @@ export const AdminPortal: React.FC = () => {
                   <button
                     type="submit"
                     disabled={!newSlideImage}
-                    className={`w-full py-3 px-5 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    className={`w-full py-3.5 px-5 rounded-xl font-black text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
                       newSlideImage
-                        ? 'bg-amber-500 hover:bg-amber-400 text-black shadow-lg shadow-amber-500/20'
+                        ? 'bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black shadow-lg shadow-amber-500/20 hover:scale-[1.01]'
                         : 'bg-white/5 text-slate-500 border border-white/10 cursor-not-allowed'
                     }`}
                   >
-                    <Plus className="w-4 h-4" />
-                    <span>Add This Photo to Hero Slider</span>
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Save & Apply This Photo to Hero Slider Everywhere</span>
                   </button>
                 </div>
 
@@ -793,13 +869,23 @@ export const AdminPortal: React.FC = () => {
 
             {/* SECTION B: Current Hero Slides List */}
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                  Active Hero Slides ({heroSlides.length} total)
-                </span>
-                <span className="text-xs text-slate-400">
-                  Use Up/Down arrows to reorder slides
-                </span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0C0F17] p-4 rounded-2xl border border-white/10">
+                <div>
+                  <span className="text-xs font-bold text-white uppercase tracking-wider block">
+                    Active Hero Slides ({heroSlides.length} total)
+                  </span>
+                  <span className="text-xs text-slate-400">
+                    Use Up/Down arrows to reorder, or Replace Photo to swap any image.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSaveAllHeroSlides}
+                  className="py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-extrabold flex items-center gap-1.5 shadow-md cursor-pointer transition-all hover:scale-105 self-start sm:self-auto"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Save Slide Order & Updates Everywhere</span>
+                </button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
